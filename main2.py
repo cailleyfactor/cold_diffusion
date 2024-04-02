@@ -5,13 +5,11 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
 from torchvision.datasets import MNIST
 import matplotlib.pyplot as plt
-from ddpm import DDPM
+from ddpm2 import DDPM
 from CNN import CNN
-from train import train_model
+from train2 import train_model
 import os
 import pandas as pd
-
-export = 0.0
 
 # Hyperparameters
 n_epoch = 100
@@ -24,24 +22,18 @@ n_T = 1000
 
 # Original run: (16, 32, 32, 16)
 # Second run: (16, 32, 64, 32, 16)
-# For more capacity (for example - suggested by Miles): (64, 128, 256, 128, 64)
 
 # Set the number of workers for data loader
 num_workers = 0
 
 # Specify the paths for saving
-model_path = "./ddpm_mnist2.pth"
-sample_dir = "./take4"
-eval_dir = "./eval_default"
-losses_path = "./losses4.csv"
+model_path = "./ddpm_mnist_trial_kernel13_std7.0_trial.pth"
+sample_dir = "./take_trial_kernel13_std7.0_trial"
+losses_path = "./losses_trial_kernel13_std7.0_trial.csv"
 
 # Make sample directory if it does not exist
 if not os.path.exists(sample_dir):
     os.makedirs(sample_dir)
-
-# Make eval directory if it does not exist
-if not os.path.exists(eval_dir):
-    os.makedirs(eval_dir)
 
 # Specify the MPS device
 device = torch.device("mps")
@@ -69,9 +61,11 @@ val_dataloader = DataLoader(
     val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers
 )
 
-# Initialise model, optim, accelerator
+# Initialise the CNN and the DDPM models
 gt = CNN(in_channels=1, expected_shape=(28, 28), n_hidden=n_hidden, act=act)
 ddpm = DDPM(gt=gt, betas=betas, n_T=n_T).to(device)
+
+# Initialise optimiser and accelerator
 optim = torch.optim.Adam(ddpm.parameters(), lr=lr)
 accelerator = Accelerator()
 
@@ -91,11 +85,14 @@ train_losses, val_losses, ddpm = train_model(
     sample_dir,
 )
 
-# # Save trained model
-# torch.save(ddpm.state_dict(), model_path)
+# Save trained model
+torch.save(ddpm.state_dict(), model_path)
 
 # Convert losses to Pandas DataFrame
 df_losses = pd.DataFrame({"train_losses": train_losses, "val_losses": val_losses})
+
+# Save losses to CSV
+df_losses.to_csv(losses_path, index=False)
 
 # Plotting training and validation loss curves
 plt.figure(figsize=(10, 5))
