@@ -1,3 +1,9 @@
+"""!@file ddpm.py
+@brief Module containing tools for the denoising diffusion probabilistic model (DDPM).
+@details Initialises the model, defines the forward pass, and provides a sampling function.
+@author Created by C. Factor on 10/03/2024 and involves code from a
+starter notebook provided by Miles Cranmer for the coursework project.
+"""
 from typing import Tuple
 import torch
 import torch.nn as nn
