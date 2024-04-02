@@ -6,11 +6,12 @@ A PDF of a report describing the project in detail is provided in the report fol
 Excluding the appendix, the word count for the report is XX words.
 
 ## Saved models & samples
-First clone the repository from git. Cloning the repository includes cloning the saved models for different parts of the coursework.
+First clone the repository from git. Cloning the repository includes cloning the saved models for different parts of the coursework,
+which are stored in the "report" folder.
 The saved models and sampling outputs for the first part of the coursework for models with a degradation of adding Gaussian noise
-are stored in folders called "Default_model" and "Model_extra_hidden"
+are stored in subfolders called "Default_model" and "Model_extra_hidden"
 for the default model and model with an extra hidden layer, respectively.
-The saved models and sampling outputs for the cold diffusion part of the coursework are stored in folders called
+The saved models and sampling outputs for the cold diffusion part of the coursework are stored in subfolders called
 "Cold_3_0.1" and "Cold_13_7.0" for the model with a kernel size of 3 and std of 0.1, and the model with a kernel size of 13 and
 std of 7.0, respectively.
 
