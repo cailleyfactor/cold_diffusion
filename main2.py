@@ -1,3 +1,9 @@
+"""
+!@file main2.py
+@brief Main script for training and evaluating the cold diffusion model on the MNIST dataset.
+@author Created by C. Factor on 10/03/2024 and involves code from a starter notebook
+provided by Miles Cranmer for the coursework project.
+"""
 import torch
 import torch.nn as nn
 from accelerate import Accelerator
@@ -20,23 +26,23 @@ lr = 2e-4
 betas = (1e-4, 0.02)
 n_T = 1000
 
-# Original run: (16, 32, 32, 16)
-# Second run: (16, 32, 64, 32, 16)
-
 # Set the number of workers for data loader
 num_workers = 0
 
 # Specify the paths for saving
-model_path = "./ddpm_mnist_trial_kernel13_std7.0_trial.pth"
-sample_dir = "./take_trial_kernel13_std7.0_trial"
-losses_path = "./losses_trial_kernel13_std7.0_trial.csv"
+model_path = "./ddpm_mnist_cold.pth"
+sample_dir = "./results_cold_diffusion"
+losses_path = "./losses_cold_diffusion.csv"
 
 # Make sample directory if it does not exist
 if not os.path.exists(sample_dir):
     os.makedirs(sample_dir)
 
-# Specify the MPS device
-device = torch.device("mps")
+# Check if MPS is available and set the device accordingly
+device = (
+    torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
+)
+print(f"Using device: {device}")
 
 # Preprocessing and set up data loader
 tf = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (1.0))])

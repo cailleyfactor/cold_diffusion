@@ -1,11 +1,17 @@
+"""
+!@file: plot.py
+@brief: This script is used to plot the training and validation losses of two models in one figure.
+@details: The script loads the CSV files containing the training and validation
+losses of two models and plots them in one figure.
+"""
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Step 1: Load the CSV files
-df1 = pd.read_csv("losses2.csv")
-df2 = pd.read_csv("losses3.csv")
+# Load the CSV files
+df1 = pd.read_csv("Default_model/losses_default.csv")
+df2 = pd.read_csv("Model_extra_hidden/losses_extra_hidden.csv")
 
-# Step 3: Plot the data
+# Plot the data
 plt.figure(figsize=(10, 6))
 
 # Plot training losses
@@ -24,5 +30,4 @@ plt.plot(
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
 plt.legend()
-
-plt.show()
+plt.savefig("default_extra_hidden_combined_loss_plot.png")

@@ -1,3 +1,9 @@
+"""
+!@file train.py
+@brief Module containing tool for training the DDPM model on the MNIST dataset.
+@author Created by C. Factor on 10/03/2024 and involves code from a starter notebook
+provided by Miles Cranmer for the coursework project.
+"""
 import numpy as np
 import torch
 from tqdm import tqdm
@@ -15,6 +21,19 @@ def train_model(
     model_path,
     sample_dir,
 ):
+    """
+    @brief Function to train the DDPM model.
+    @param n_epoch: The number of epochs to train the model.
+    @param ddpm: The DDPM model.
+    @param optim: The optimizer.
+    @param train_dataloader: The DataLoader for the training dataset.
+    @param val_dataloader: The DataLoader for the validation dataset.
+    @param accelerator: The Accelerator object.
+    @param model_path: The path to save the trained model.
+    @param sample_dir: The directory to save the samples.
+    @return train_losses: The training losses.
+    @return val_losses: The validation losses.
+    @return ddpm: The trained DDPM model."""
     train_losses = []
     val_losses = []
 
@@ -48,8 +67,7 @@ def train_model(
 
             optim.step()
 
-        # Save model and samples every 10 epochs
-
+        # Evaluate the model on the validation dataset and generate samples
         ddpm.eval()
         with torch.no_grad():
             for x_val, _ in val_dataloader:

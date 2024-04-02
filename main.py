@@ -1,3 +1,9 @@
+"""
+!@file main.py
+@brief Main script for training and evaluating the DDPM model on the MNIST dataset.
+@author Created by C. Factor on 10/03/2024 and involves code from a starter notebook
+provided by Miles Cranmer for the coursework project.
+"""
 import torch
 import torch.nn as nn
 from accelerate import Accelerator
@@ -22,29 +28,25 @@ lr = 2e-4
 betas = (1e-4, 0.02)
 n_T = 1000
 
-# Original run: (16, 32, 32, 16)
-# Second run: (16, 32, 64, 32, 16)
-# For more capacity (for example - suggested by Miles): (64, 128, 256, 128, 64)
+# Changed hyperparameter n_hidden = (16, 32, 64, 32, 16)
 
 # Set the number of workers for data loader
 num_workers = 0
 
 # Specify the paths for saving
-model_path = "./ddpm_mnist2.pth"
-sample_dir = "./take4"
-eval_dir = "./eval_default"
-losses_path = "./losses4.csv"
+model_path = "./ddpm_mnist_default.pth"
+sample_dir = "./results_default_model"
+losses_path = "./losses_default_model.csv"
 
 # Make sample directory if it does not exist
 if not os.path.exists(sample_dir):
     os.makedirs(sample_dir)
 
-# Make eval directory if it does not exist
-if not os.path.exists(eval_dir):
-    os.makedirs(eval_dir)
-
-# Specify the MPS device
-device = torch.device("mps")
+# Check if MPS is available and set the device accordingly
+device = (
+    torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
+)
+print(f"Using device: {device}")
 
 # Preprocessing and set up data loader
 tf = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (1.0))])
@@ -91,8 +93,8 @@ train_losses, val_losses, ddpm = train_model(
     sample_dir,
 )
 
-# # Save trained model
-# torch.save(ddpm.state_dict(), model_path)
+# Save trained model
+torch.save(ddpm.state_dict(), model_path)
 
 # Convert losses to Pandas DataFrame
 df_losses = pd.DataFrame({"train_losses": train_losses, "val_losses": val_losses})

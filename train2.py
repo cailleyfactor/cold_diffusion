@@ -1,6 +1,5 @@
 """!@file ddpm2.py
-@brief Module containing tool for training, evaluating, and sampling from the DDPM model.
-@details
+@brief Module containing tool for training, evaluating, and sampling from the cold diffusion model.
 @author Created by C. Factor on 10/03/2024 and involves code from a starter notebook
 provided by Miles Cranmer for the coursework project.
 """
@@ -22,6 +21,19 @@ def train_model(
     model_path,
     sample_dir,
 ):
+    """
+    @brief Function to train the DDPM model.
+    @param n_epoch: The number of epochs to train the model.
+    @param ddpm: The DDPM model.
+    @param optim: The optimizer.
+    @param train_dataloader: The DataLoader for the training dataset.
+    @param val_dataloader: The DataLoader for the validation dataset.
+    @param accelerator: The Accelerator object.
+    @param model_path: The path to save the trained model.
+    @param sample_dir: The directory to save the samples.
+    @return train_losses: The training losses.
+    @return val_losses: The validation losses.
+    @return ddpm: The trained DDPM model."""
     train_losses = []
     val_losses = []
 
@@ -55,9 +67,9 @@ def train_model(
 
             optim.step()
 
-        # Save model and samples every 10 epochs
-
+        # Evaluate the model on the validation dataset and generate samples
         ddpm.eval()
+        # Disable gradient computation
         with torch.no_grad():
             x_starts = []
             n_sample = 16
@@ -81,19 +93,16 @@ def train_model(
                 # Stack the collected samples along a new dimension
                 x_start_stacked = torch.stack(x_starts, dim=0)
             # Generate and save samples after validation
-            blur, xh, recon, z_0 = ddpm.sample(
+            xh, recon = ddpm.sample(
                 n_sample, (1, 28, 28), x_start_stacked, accelerator.device
             )
             grid = make_grid(xh, nrow=4)
             grid2 = make_grid(recon, nrow=4)
-            grid3 = make_grid(z_0, nrow=4)
-            grid6 = make_grid(blur, nrow=4)
 
             # Save samples to `./contents` directory
             save_image(grid, os.path.join(sample_dir, f"ddpm_output_algo2_{i:04d}.png"))
             save_image(grid2, os.path.join(sample_dir, f"ddpm_recon_{i:04d}.png"))
-            save_image(grid3, os.path.join(sample_dir, f"ddpm_z_0_{i:04d}.png"))
-            save_image(grid6, os.path.join(sample_dir, f"ddpm_blur_{i:04d}.png"))
+
             # save model
             torch.save(ddpm.state_dict(), model_path)
 

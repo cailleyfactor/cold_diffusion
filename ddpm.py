@@ -11,6 +11,13 @@ from ddpm_schedules import ddpm_schedules
 
 
 class DDPM(nn.Module):
+    """
+    @class DDPM
+    @brief Class for the denoising diffusion probabilistic model (DDPM).
+    @details This class is the default DDPM model employing the addition of Gaussian noise
+    and contains modules for training, evaluation, and sampling.
+    """
+
     def __init__(
         self,
         gt,
@@ -18,6 +25,13 @@ class DDPM(nn.Module):
         n_T: int,
         criterion: nn.Module = nn.MSELoss(),
     ) -> None:
+        """
+        @brief Initialises the DDPM model.
+        @param gt: The decoder (CNN) model.
+        @param betas: The beta values for the noise schedule.
+        @param n_T: The number of timesteps.
+        @param criterion: The loss function.
+        @return None"""
         super().__init__()
 
         self.gt = gt
@@ -35,7 +49,11 @@ class DDPM(nn.Module):
         self.criterion = criterion
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Algorithm 18.1 in Prince"""
+        """
+        @brief Implements the forward pass of the DDPM model - Algorithm 18.1 in Prince
+        @param x: The input image tensor.
+        @return The loss value for the model.
+        """
 
         t = torch.randint(1, self.n_T, (x.shape[0],), device=x.device)
         eps = torch.randn_like(x)  # eps ~ N(0, 1)
@@ -48,7 +66,13 @@ class DDPM(nn.Module):
         return self.criterion(eps, self.gt(z_t, t / self.n_T))
 
     def sample(self, n_sample: int, size, device) -> torch.Tensor:
-        """Algorithm 18.2 in Prince"""
+        """
+        @brief Implements the sampling function for the DDPM model.
+        @details Algorithm 18.2 in Prince
+        @param n_sample: The number of samples to generate.
+        @param size: The size of the samples.
+        @param device: The device to run the model on.
+        @return The generated samples."""
 
         _one = torch.ones(n_sample, device=device)
         z_t = torch.randn(n_sample, *size, device=device)

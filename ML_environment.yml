@@ -1,0 +1,18 @@
+name: ML_environment
+channels:
+  - conda-forge
+  - defaults
+  - pytorch
+dependencies:
+  - accelerate==0.27.2
+  - ipykernel==6.29.2
+  - ipython==8.21.0
+  - numpy==1.26.4
+  - tqdm==4.66.2
+  - matplotlib
+  - pandas
+  - pip
+  - pip:
+    - torchgeometry==0.1.2
+    - torch==2.2.0
+    - torchvision==0.17.0

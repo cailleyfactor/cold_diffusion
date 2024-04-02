@@ -156,6 +156,9 @@ class DDPM(nn.Module):
         @param n_sample: The number of samples to generate.
         @param size: The size of the samples.
         @param x_start_stacked: The input tensor for the samples.
+        @param device: The device to run the model on.
+        @return z_t: The generated samples.
+        @return recon: The reconstructed image from the decoder (CNN).
         """
         # Set the model to evaluation mode
         self.gt.eval()
@@ -165,7 +168,6 @@ class DDPM(nn.Module):
         _one = torch.ones(n_sample, device=device)
         # Apply the blur operation to the input tensor x_start_stacked
         z_t = self.blur(x_start=z_0, t=(_one * self.n_T))
-        blur = z_t
         # Iterate over each timestep in reverse order
         for i in range(self.n_T, 0, -1):
             # Reconstruct the original image using the CNN
@@ -181,6 +183,5 @@ class DDPM(nn.Module):
             # If the timestep is 1, set the blurred image to the reconstructed image
             else:
                 z_t = z_t
-        # Return the blurred image (blur), the sample (confusingly named z_t),
-        # and the reconstructed image (recon), and the original image (z_0)
-        return blur, z_t, recon, z_0
+        # Return the sample (confusingly named z_t) and the reconstructed image (recon)
+        return z_t, recon

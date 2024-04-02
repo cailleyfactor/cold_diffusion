@@ -1,0 +1,20 @@
+# Use the official Miniconda3 image as the base image
+FROM continuumio/miniconda3
+
+# Set the working directory in the container
+WORKDIR /cf593_plot
+
+# Copy the current directory contents into the container
+COPY . /cf593_plot
+
+# Create the Conda environment from your YAML file
+RUN conda env create -f ML_environment.yml
+
+# Activate the Conda environment
+SHELL ["conda", "run", "-n", "ML_environment", "/bin/bash", "-c"]
+
+# Ensure Python outputs are flushed immediately
+ENV PYTHONUNBUFFERED=1
+
+# Run the Python script
+CMD ["conda", "run", "--no-capture-output", "-n", "ML_environment", "python", "plot.py"]
