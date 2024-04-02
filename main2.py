@@ -30,9 +30,9 @@ n_T = 1000
 num_workers = 0
 
 # Specify the paths for saving
-model_path = "./ddpm_mnist_cold.pth"
-sample_dir = "./results_cold_diffusion"
-losses_path = "./losses_cold_diffusion.csv"
+model_path = "./results/ddpm_mnist_cold.pth"
+sample_dir = "./results/results_cold_diffusion"
+losses_path = "./results/losses_cold_diffusion.csv"
 
 # Make sample directory if it does not exist
 if not os.path.exists(sample_dir):

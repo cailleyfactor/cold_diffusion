@@ -34,9 +34,9 @@ n_T = 1000
 num_workers = 0
 
 # Specify the paths for saving
-model_path = "./ddpm_mnist_default.pth"
-sample_dir = "./results_default_model"
-losses_path = "./losses_default_model.csv"
+model_path = "./results/ddpm_mnist_default.pth"
+sample_dir = "./results/results_default_model"
+losses_path = "./results/losses_default_model.csv"
 
 # Make sample directory if it does not exist
 if not os.path.exists(sample_dir):

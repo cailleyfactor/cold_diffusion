@@ -6,10 +6,16 @@ losses of two models and plots them in one figure.
 """
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+
+# Create a directory if it doesn't exist
+folder_name = "results"
+if not os.path.exists(folder_name):
+    os.makedirs(folder_name)
 
 # Load the CSV files
-df1 = pd.read_csv("Default_model/losses_default.csv")
-df2 = pd.read_csv("Model_extra_hidden/losses_extra_hidden.csv")
+df1 = pd.read_csv("results/Default_model/losses_default.csv")
+df2 = pd.read_csv("results/Model_extra_hidden/losses_extra_hidden.csv")
 
 # Plot the data
 plt.figure(figsize=(10, 6))
@@ -30,4 +36,4 @@ plt.plot(
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
 plt.legend()
-plt.savefig("default_extra_hidden_combined_loss_plot.png")
+plt.savefig(os.path.join(folder_name, "default_extra_hidden_combined_loss_plot.png"))
