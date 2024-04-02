@@ -1,5 +1,5 @@
 """
-!@file CNN.py
+@file CNN.py
 @brief Module containing the convolutional neural network (CNN) model for the
 denoising diffusion probabilistic model (DDPM).
 @details Initialises the CNN model, defines the forward pass, and provides a sampling function.

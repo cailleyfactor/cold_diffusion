@@ -17,7 +17,7 @@ import torchgeometry as tgm
 
 class DDPM(nn.Module):
     """
-    !@class DDPM
+    @class DDPM_Cold
     @brief Class for the denoising diffusion probabilistic model (DDPM) with Gaussian blurring.
     @details This class is a modified version of the DDPM model
     that incorporates Gaussian blurring as a preprocessing step.

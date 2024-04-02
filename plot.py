@@ -1,5 +1,5 @@
 """
-!@file: plot.py
+@file: plot.py
 @brief: This script is used to plot the training and validation losses of two models in one figure.
 @details: The script loads the CSV files containing the training and validation
 losses of two models and plots them in one figure.

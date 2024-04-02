@@ -1,4 +1,4 @@
-"""!@file ddpm_schedules.py
+"""@file ddpm_schedules.py
 @brief Module containing functions for creating a DDPM training schedule.
 @author Created by C. Factor on 10/03/2024 and
 involves code from a starter notebook provided by Miles Cranmer for the coursework project.

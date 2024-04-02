@@ -1,5 +1,5 @@
 """
-!@file main2.py
+@file main2.py
 @brief Main script for training and evaluating the cold diffusion model on the MNIST dataset.
 @author Created by C. Factor on 10/03/2024 and involves code from a starter notebook
 provided by Miles Cranmer for the coursework project.
