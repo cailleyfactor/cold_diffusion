@@ -61,8 +61,7 @@ This can be run by navigating in the docs file and running doxygen with:
 $doxygen
 
 # Citations
-## References
-Gaussian blurring was selected as the arbitrary image transformation based on the Bansal et al. paper and code from `deblurring-diffusion-pytorch` from their repository was modified to apply iterative Gaussian blurring on the MNIST images and used to inform the development of the forward process. The detailed references for the paper and the repository are available in the report located in the `report` folder.
+Gaussian blurring was selected as the arbitrary image transformation based on the Bansal et al. paper and code from `deblurring-diffusion-pytorch` from their repository was modified to apply iterative Gaussian blurring on the MNIST images and used to inform the development of the forward process.
 
 ## License
 Released 2024 by Cailley Factor.
